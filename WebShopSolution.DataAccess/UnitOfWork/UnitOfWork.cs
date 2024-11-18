@@ -1,5 +1,8 @@
-﻿using WebShop.Notifications;
-using WebShop.Repositories;
+﻿
+
+using WebShop.Notifications;
+using WebShopSolution.DataAccess;
+using WebShopSolution.DataAccess.Entities;
 
 namespace WebShop.UnitOfWork
 {
@@ -22,7 +25,7 @@ namespace WebShop.UnitOfWork
             _productSubject.Attach(new EmailNotification());
         }
 
-        public void NotifyProductAdded(Product product)
+        public void NotifyProductAdded(ProductEntity product)
         {
             _productSubject.Notify(product);
         }
