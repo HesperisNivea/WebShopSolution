@@ -2,7 +2,8 @@ using Microsoft.AspNetCore.Mvc;
 using Moq;
 using WebShop;
 using WebShop.Controllers;
-using WebShop.Repositories;
+using WebShopSolution.DataAccess;
+
 
 public class ProductControllerTests
 {
@@ -13,7 +14,7 @@ public class ProductControllerTests
     {
         _mockProductRepository = new Mock<IProductRepository>();
 
-        // Ställ in mock av Products-egenskapen
+        // Stï¿½ll in mock av Products-egenskapen
     }
 
     [Fact]

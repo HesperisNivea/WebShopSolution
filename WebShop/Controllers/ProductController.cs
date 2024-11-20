@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using WebShop.UnitOfWork;
+using WebShop.Models;
 
 namespace WebShop.Controllers
 {
@@ -11,23 +11,23 @@ namespace WebShop.Controllers
         {
         }
 
-        // Endpoint för att hämta alla produkter
+        // Endpoint fï¿½r att hï¿½mta alla produkter
         [HttpGet]
         public ActionResult<IEnumerable<Product>> GetProducts()
         {
-            // Behöver använda repository via Unit of Work för att hämta produkter
+            // Behï¿½ver anvï¿½nda repository via Unit of Work fï¿½r att hï¿½mta produkter
             return Ok();
         }
 
-        // Endpoint för att lägga till en ny produkt
+        // Endpoint fï¿½r att lï¿½gga till en ny produkt
         [HttpPost]
         public ActionResult AddProduct(Product product)
         {
-            // Lägger till produkten via repository
+            // Lï¿½gger till produkten via repository
 
-            // Sparar förändringar
+            // Sparar fï¿½rï¿½ndringar
 
-            // Notifierar observatörer om att en ny produkt har lagts till
+            // Notifierar observatï¿½rer om att en ny produkt har lagts till
 
             return Ok();
         }

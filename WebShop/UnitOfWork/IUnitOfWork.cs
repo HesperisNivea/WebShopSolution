@@ -1,4 +1,5 @@
 ﻿
+using WebShop.Models;
 using WebShopSolution.DataAccess.Entities;
 
 namespace WebShop.UnitOfWork
@@ -8,7 +9,7 @@ namespace WebShop.UnitOfWork
     {
          // Repository för produkter
          // Sparar förändringar (om du använder en databas)
-        void NotifyProductAdded(ProductEntity product); // Notifierar observatörer om ny produkt
+        void NotifyProductAdded(Product product); // Notifierar observatörer om ny produkt
     }
 }
 
