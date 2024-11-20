@@ -2,12 +2,15 @@
 
 namespace WebShopSolution.DataAccess;
 
-public interface IProductRepository : IRepository<ProductEntity>
+public interface IProductRepository<T> : IRepository<T> where T : class
 {
-    //Task<List<Product>> GetFeaturedProducts(int take);
+    Task<List<ProductEntity>> GetFeaturedProducts(int take); 
 }
 
-public class ProductRepository(WebShopDbContext context) : Repository<ProductEntity>(context), IProductRepository
+public class ProductRepository(WebShopDbContext context) : Repository<ProductEntity>(context), IProductRepository<ProductEntity>
 {
-    
+    public Task<List<ProductEntity>> GetFeaturedProducts(int take)
+    {
+        throw new NotImplementedException();
+    }
 }

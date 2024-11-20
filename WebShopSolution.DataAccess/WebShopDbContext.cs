@@ -27,6 +27,9 @@ public class WebShopDbContext(DbContextOptions<WebShopDbContext> options) : DbCo
             .HasOne(o => o.PaymentMethod).WithMany()
             .HasForeignKey(o => o.PaymentMethodId);
         
+        modelBuilder.Entity<OrderDetailEntity>()
+            .HasKey(od => new { od.OrderId, od.ProductId });
+        
         modelBuilder.Entity<PaymentMethodEntity>()
             .HasMany(pm => pm.Orders)
             .WithOne(o => o.PaymentMethod);

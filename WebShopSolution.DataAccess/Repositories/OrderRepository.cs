@@ -2,12 +2,15 @@
 
 namespace WebShopSolution.DataAccess;
 
-public interface IOrderRepository : IRepository<OrderEntity>
+public interface IOrderRepository<T> : IRepository<T> where T : class
 {
-    
+    Task<T?> GetByIdAsync(int id);
 }
 
-public class OrderRepository(WebShopDbContext context) : Repository<OrderEntity>(context), IRepository<OrderEntity>
+public class OrderRepository(WebShopDbContext context) : Repository<OrderEntity>(context), IOrderRepository<OrderEntity>
 {
-
+    public Task<OrderEntity?> GetByIdAsync(int id)
+    {
+        throw new NotImplementedException();
+    }
 }
