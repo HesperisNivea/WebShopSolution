@@ -4,7 +4,7 @@ namespace WebShop.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class OrderDetailsController
+public class PaymentMethodController
 {
     
 }

@@ -1,6 +1,6 @@
 ﻿using WebShopSolution.DataAccess.Entities;
 
-namespace WebShopSolution.DataAccess;
+namespace WebShop.Repositories;
 
 public interface IProductRepository<T> : IRepository<T> where T : class
 {

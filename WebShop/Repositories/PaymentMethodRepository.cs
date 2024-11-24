@@ -1,8 +1,8 @@
 ﻿using WebShopSolution.DataAccess.Entities;
 
-namespace WebShopSolution.DataAccess;
+namespace WebShop.Repositories;
 
-interface IPaymentMethodRepository<T> : IRepository<T> where T : class
+public interface IPaymentMethodRepository<T> : IRepository<T> where T : class
 {
     Task<T?> GetByIdAsync(int id);
 }

@@ -1,13 +1,13 @@
 ﻿using WebShopSolution.DataAccess.Entities;
 
-namespace WebShopSolution.DataAccess;
-public interface IOrderDetailsRepository : IRepository<OrderDetailEntity>
+namespace WebShop.Repositories;
+public interface IOrderDetailsRepository<T> : IRepository<T> where T : class
 {
     Task<IEnumerable<OrderDetailEntity>> GetByOrderId(int orderId);
     
     Task<IEnumerable<OrderDetailEntity>> GetByProductId(int productId);
 }
-public class OrderDetailsRepository(WebShopDbContext context) : Repository<OrderDetailEntity>(context), IOrderDetailsRepository
+public class OrderDetailRepository(WebShopDbContext context) : Repository<OrderDetailEntity>(context), IOrderDetailsRepository<OrderDetailEntity>
 {
     public Task<IEnumerable<OrderDetailEntity>> GetByOrderId(int orderId)
     {

@@ -1,9 +1,11 @@
-﻿namespace WebShopSolution.DataAccess;
+﻿using Microsoft.EntityFrameworkCore;
+
+namespace WebShop.Repositories;
 
 public interface IRepository<T> where T : class
 {
     //Task<T?> GetByIdAsync(int id);
-    Task<List<T>> ListAllAsync();
+    Task<IEnumerable<T>?> ListAllAsync();
     Task<T> AddAsync(T entity);
     Task UpdateAsync(T entity);
     Task DeleteAsync(T entity);
@@ -11,9 +13,9 @@ public interface IRepository<T> where T : class
 
 public class Repository<T>(WebShopDbContext context) : IRepository<T> where T : class
 {
-    public Task<List<T>> ListAllAsync()
+    public async Task<IEnumerable<T>?> ListAllAsync()
     {
-        throw new NotImplementedException();
+        return await context.Set<T>().ToListAsync() ?? null;
     }
 
     public Task<T> AddAsync(T entity)

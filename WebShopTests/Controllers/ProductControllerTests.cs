@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Moq;
 using WebShop;
 using WebShop.Controllers;
+using WebShop.Repositories;
 using WebShopSolution.DataAccess;
 using WebShopSolution.DataAccess.Entities;
 

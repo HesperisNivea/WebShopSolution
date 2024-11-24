@@ -1,6 +1,6 @@
 ﻿namespace WebShop.Tests.Repositories;
 
-public class OrderDetailsRepositoryTests
+public class OrderDetailRepositoryTests
 {
     
 }

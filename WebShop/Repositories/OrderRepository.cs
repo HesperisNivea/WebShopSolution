@@ -1,6 +1,6 @@
 ﻿using WebShopSolution.DataAccess.Entities;
 
-namespace WebShopSolution.DataAccess;
+namespace WebShop.Repositories;
 
 public interface IOrderRepository<T> : IRepository<T> where T : class
 {
