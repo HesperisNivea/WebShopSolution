@@ -4,8 +4,10 @@ namespace WebShop.Notifications;
 
 public class SmsNotification(string phoneNumber) : INotificationObserver
 {
-    public void Update(ProductEntity product)
+    public Task Update(ProductEntity product)
     {
-        throw new NotImplementedException();
+        Console.WriteLine("Send to" + phoneNumber);
+        Console.WriteLine($"SMS Notification: New product added - {product.Name}");
+        return Task.CompletedTask;
     }
 }

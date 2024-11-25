@@ -22,7 +22,8 @@ namespace WebShop.UnitOfWork
          Task BeginTransactionAsync();
          Task CommitTransactionAsync();
          Task RollbackTransactionAsync();
-        void NotifyProductAdded(ProductEntity product); // Notifierar observatörer om ny produkt
+        Task NotifyProductAdded(ProductEntity product); // Notifierar observatörer om ny produkt
+        
         
     }
 }

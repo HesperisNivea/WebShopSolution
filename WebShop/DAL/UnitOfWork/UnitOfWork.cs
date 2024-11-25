@@ -24,27 +24,33 @@ namespace WebShop.UnitOfWork
 
         private readonly ProductSubject _productSubject;
         
-        public UnitOfWork(WebShopDbContext context, ICustomerRepository<CustomerEntity> customers, string email = null, ProductSubject productSubject = null)
+        public UnitOfWork(WebShopDbContext context, 
+            ICustomerRepository<CustomerEntity> customers, 
+            IProductRepository<ProductEntity> products, 
+            IOrderDetailsRepository<OrderDetailEntity> orderDetails, 
+            IOrderRepository<OrderEntity> orders, 
+            IPaymentMethodRepository<PaymentMethodEntity> payments, ProductSubject productSubject = null)
             {
                 _context = context;
                 Customers = customers;
-                Products = new ProductRepository(context);
-                OrderDetails = new OrderDetailRepository(context);
-                Orders = new OrderRepository(context);
-                Payments = new PaymentMethodRepository(context);
+                Products = products;
+                OrderDetails = orderDetails;
+                Orders = orders;
+                Payments = payments;
                 _productSubject = productSubject;
                 
                 // Om inget ProductSubject injiceras, skapa ett nytt
                 _productSubject = productSubject ?? new ProductSubject();
 
                 // Registrera standardobservatörer
-                _productSubject.Attach(new EmailNotification("dhjdsjdk"));
+                _productSubject.Attach(new EmailNotification("example@email.com"));
+                _productSubject.Attach(new SmsNotification("042838298"));
             }
 
         
-        public void NotifyProductAdded(ProductEntity product)
+        public async Task NotifyProductAdded(ProductEntity product)
         {
-            _productSubject.Notify(product);
+            await _productSubject.Notify(product);
         }
         
         public async Task<int> SaveChangesAsync()

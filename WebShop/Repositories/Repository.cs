@@ -6,9 +6,9 @@ public interface IRepository<T> where T : class
 {
     //Task<T?> GetByIdAsync(int id);
     Task<IEnumerable<T>?> ListAllAsync();
-    Task<T> AddAsync(T entity);
+    Task AddAsync(T entity);
     Task UpdateAsync(T entity);
-    Task DeleteAsync(T entity);
+    Task DeleteAsync(int id);
 }
 
 public class Repository<T>(WebShopDbContext context) : IRepository<T> where T : class
@@ -18,18 +18,21 @@ public class Repository<T>(WebShopDbContext context) : IRepository<T> where T : 
         return await context.Set<T>().ToListAsync() ?? null;
     }
 
-    public Task<T> AddAsync(T entity)
+    public async Task AddAsync(T entity)
     {
-        throw new NotImplementedException();
+        await context.Set<T>().AddAsync(entity);
     }
 
     public Task UpdateAsync(T entity)
     {
-        throw new NotImplementedException();
+       context.Update(entity);
+       return Task.CompletedTask;
+
     }
 
-    public Task DeleteAsync(T entity)
+    public Task DeleteAsync(int id)
     {
-        throw new NotImplementedException();
+        context.Remove(id);
+        return Task.CompletedTask;
     }
 }
