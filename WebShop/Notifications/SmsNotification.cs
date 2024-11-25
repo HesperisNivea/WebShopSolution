@@ -2,12 +2,11 @@
 
 namespace WebShop.Notifications;
 
-public class SmsNotification(string phoneNumber) : INotificationObserver
+public class SmsNotification(string? phoneNumber = null) : INotificationObserver
 {
-    public Task Update(ProductEntity product)
+    public void Update(ProductEntity product)
     {
-        Console.WriteLine("Send to" + phoneNumber);
-        Console.WriteLine($"SMS Notification: New product added - {product.Name}");
-        return Task.CompletedTask;
+        Console.WriteLine("Sending SMS notification to " + phoneNumber);
+        Console.WriteLine($"SMS: Product with name {product.Name} is now in stock!");
     }
 }

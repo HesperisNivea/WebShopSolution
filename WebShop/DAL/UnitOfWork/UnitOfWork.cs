@@ -24,19 +24,14 @@ namespace WebShop.UnitOfWork
 
         private readonly ProductSubject _productSubject;
         
-        public UnitOfWork(WebShopDbContext context, 
-            ICustomerRepository<CustomerEntity> customers, 
-            IProductRepository<ProductEntity> products, 
-            IOrderDetailsRepository<OrderDetailEntity> orderDetails, 
-            IOrderRepository<OrderEntity> orders, 
-            IPaymentMethodRepository<PaymentMethodEntity> payments, ProductSubject productSubject = null)
+        public UnitOfWork(WebShopDbContext context, ICustomerRepository<CustomerEntity> customers, string email =null, ProductSubject productSubject = null)
             {
                 _context = context;
                 Customers = customers;
-                Products = products;
-                OrderDetails = orderDetails;
-                Orders = orders;
-                Payments = payments;
+                Products = new ProductRepository(context);
+                OrderDetails = new OrderDetailRepository(context);
+                Orders = new OrderRepository(context);
+                Payments = new PaymentMethodRepository(context);
                 _productSubject = productSubject;
                 
                 // Om inget ProductSubject injiceras, skapa ett nytt
@@ -48,9 +43,9 @@ namespace WebShop.UnitOfWork
             }
 
         
-        public async Task NotifyProductAdded(ProductEntity product)
+        public void NotifyProductAdded(ProductEntity product)
         {
-            await _productSubject.Notify(product);
+             _productSubject.Notify(product);
         }
         
         public async Task<int> SaveChangesAsync()

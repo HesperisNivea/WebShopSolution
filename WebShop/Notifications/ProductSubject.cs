@@ -21,12 +21,12 @@ namespace WebShop.Notifications
             _observers.Remove(observer);
         }
 
-        public async Task Notify(ProductEntity product)
+        public void Notify(ProductEntity product)
         {
             // Notifiera alla observatörer om en ny produkt
             foreach (var observer in _observers)
             {
-               await observer.Update(product);
+                observer.Update(product);
             }
         }
     }

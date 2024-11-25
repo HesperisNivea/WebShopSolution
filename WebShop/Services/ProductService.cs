@@ -60,7 +60,7 @@ public class ProductService(IUnitOfWork unitOfWork) : IProductService
             };
             await unitOfWork.Products.AddAsync(product);
             await unitOfWork.SaveChangesAsync();
-            await unitOfWork.NotifyProductAdded(product);
+            unitOfWork.NotifyProductAdded(product);
             await unitOfWork.CommitTransactionAsync();
         }
         
