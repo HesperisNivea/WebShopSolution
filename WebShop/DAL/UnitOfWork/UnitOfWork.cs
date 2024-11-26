@@ -13,25 +13,28 @@ namespace WebShop.UnitOfWork
     public class UnitOfWork : IUnitOfWork
     {
         // Hämta produkter från repository
-        private bool _disposed = false;
-        private readonly WebShopDbContext _context;
-        private IDbContextTransaction _transaction;
+        private readonly IWebShopDbContext _context;
         public IProductRepository<ProductEntity> Products { get; private set; }
         public IOrderDetailsRepository<OrderDetailEntity> OrderDetails { get; private set; }
         public IOrderRepository<OrderEntity> Orders { get; private set; }
-        public IPaymentMethodRepository<PaymentMethodEntity> Payments { get; private set; }
         public ICustomerRepository<CustomerEntity> Customers { get; }
 
         private readonly ProductSubject _productSubject;
         
-        public UnitOfWork(WebShopDbContext context, ICustomerRepository<CustomerEntity> customers, string email =null, ProductSubject productSubject = null)
+        public UnitOfWork(IWebShopDbContext context,
+        ICustomerRepository<CustomerEntity> customers,
+        IProductRepository<ProductEntity> products,
+        IOrderDetailsRepository<OrderDetailEntity> orderDetails,
+        IOrderRepository<OrderEntity> orders,
+        string email =null,
+        ProductSubject productSubject = null)
             {
                 _context = context;
                 Customers = customers;
-                Products = new ProductRepository(context);
-                OrderDetails = new OrderDetailRepository(context);
-                Orders = new OrderRepository(context);
-                Payments = new PaymentMethodRepository(context);
+                Products = products;
+                OrderDetails = orderDetails;
+                Orders = orders;
+                
                 _productSubject = productSubject;
                 
                 // Om inget ProductSubject injiceras, skapa ett nytt
@@ -42,65 +45,20 @@ namespace WebShop.UnitOfWork
                 _productSubject.Attach(new SmsNotification("042838298"));
             }
 
-        
+        public async Task<int> CommitAsync()
+        {
+            return await _context.SaveChangesAsync();
+        }
+
         public void NotifyProductAdded(ProductEntity product)
         {
              _productSubject.Notify(product);
         }
         
-        public async Task<int> SaveChangesAsync()
-        {
-            return await _context.SaveChangesAsync();
-        }
-
-        public async Task BeginTransactionAsync() 
-        {
-            _transaction = await _context.Database.BeginTransactionAsync();
-        }
-
-        public async Task CommitTransactionAsync()
-        {
-            try
-            {
-                await _transaction.CommitAsync();
-            }
-            catch
-            {
-                await _transaction.RollbackAsync();
-                throw;
-            }
-            finally
-            {
-                await _transaction.DisposeAsync();
-                _transaction = null!;
-            }
-        }
-
-        public async Task RollbackTransactionAsync()
-        {
-            await _transaction.RollbackAsync();
-            await _transaction.DisposeAsync();
-            _transaction = null!;
-        }
-        
         public void Dispose()
         {
-            Dispose(true);
-            GC.SuppressFinalize(this);
+            _context.Dispose();
         }
-
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!this._disposed)
-            {
-                if (disposing)
-                {
-                    _context.Dispose();
-                }
-                this._disposed = true;
-            }
-        }
-
-    
+        
     }
 }

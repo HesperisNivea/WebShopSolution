@@ -21,11 +21,7 @@ public class ProductService(IUnitOfWork unitOfWork) : IProductService
         
         using (unitOfWork)
         { 
-            await unitOfWork.BeginTransactionAsync();
             var result = await unitOfWork.Products.ListAllAsync();
-            await unitOfWork.SaveChangesAsync();
-            await unitOfWork.CommitTransactionAsync();
-
             if (result != null)
             {
                 return result.Select(p => new ProductDto
@@ -51,7 +47,7 @@ public class ProductService(IUnitOfWork unitOfWork) : IProductService
     {
         using (unitOfWork)
         {
-            await unitOfWork.BeginTransactionAsync();
+            
             var product = new ProductEntity
             {
                 Name = customerDto.Name,
@@ -59,9 +55,8 @@ public class ProductService(IUnitOfWork unitOfWork) : IProductService
                 Price = customerDto.Price
             };
             await unitOfWork.Products.AddAsync(product);
-            await unitOfWork.SaveChangesAsync();
             unitOfWork.NotifyProductAdded(product);
-            await unitOfWork.CommitTransactionAsync();
+            await unitOfWork.CommitAsync();
         }
         
         return customerDto;
@@ -71,13 +66,14 @@ public class ProductService(IUnitOfWork unitOfWork) : IProductService
     {
         using (unitOfWork)
         {
-            await unitOfWork.BeginTransactionAsync();
             var product = new ProductEntity
             {
                 Name = customerDto.Name,
                 Description = customerDto.Description,
                 Price = customerDto.Price
             };
+            await unitOfWork.Products.UpdateAsync(product);
+            await unitOfWork.CommitAsync();
         }
     }
 
@@ -85,10 +81,8 @@ public class ProductService(IUnitOfWork unitOfWork) : IProductService
     {
         using (unitOfWork)
         {
-            await unitOfWork.BeginTransactionAsync();
             await unitOfWork.Products.DeleteAsync(id);
-            await unitOfWork.SaveChangesAsync();
-            await unitOfWork.CommitTransactionAsync();
+            await unitOfWork.CommitAsync();
         }
     }
 }

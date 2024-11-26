@@ -14,15 +14,10 @@ namespace WebShop.UnitOfWork
             IProductRepository<ProductEntity> Products { get; }
             IOrderDetailsRepository<OrderDetailEntity> OrderDetails { get; }
             IOrderRepository<OrderEntity> Orders { get; }
-            IPaymentMethodRepository<PaymentMethodEntity> Payments { get; }
             ICustomerRepository<CustomerEntity> Customers { get; }
-
-            // Sparar förändringar (om du använder en databas)
-         Task<int> SaveChangesAsync();
-         Task BeginTransactionAsync();
-         Task CommitTransactionAsync();
-         Task RollbackTransactionAsync();
-        void NotifyProductAdded(ProductEntity product); // Notifierar observatörer om ny produkt
+        // Sparar förändringar (om du använder en databas)
+            Task<int> CommitAsync();
+            void NotifyProductAdded(ProductEntity product); // Notifierar observatörer om ny produkt
         
         
     }

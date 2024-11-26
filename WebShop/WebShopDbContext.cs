@@ -4,15 +4,24 @@ using WebShopSolution.DataAccess.Entities.Enums;
 
 namespace WebShop;
 
-public class WebShopDbContext(DbContextOptions<WebShopDbContext> options) : DbContext(options)
+public interface IWebShopDbContext
 {
+    DbSet<CustomerEntity> Customers { get; set; }
+    DbSet<ProductEntity> Products { get; set; }
+    DbSet<OrderEntity> Orders { get; set; }
+    DbSet<OrderDetailEntity> OrderDetails { get; set; }
+    Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
+    void Dispose();
     
+}
+
+public class WebShopDbContext(DbContextOptions<WebShopDbContext> options) : DbContext(options), IWebShopDbContext
+{
     public DbSet<CustomerEntity> Customers { get; set; } = null!;
     public DbSet<ProductEntity> Products { get; set; } = null!;
     public DbSet<OrderEntity> Orders { get; set; } = null!;
-    public DbSet<PaymentMethodEntity> PaymentMethods { get; set; } = null!;
     public DbSet<OrderDetailEntity> OrderDetails { get; set; } = null!;
-
+    
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
@@ -25,10 +34,6 @@ public class WebShopDbContext(DbContextOptions<WebShopDbContext> options) : DbCo
             .HasMany(o => o.OrderDetails)
             .WithOne(p => p.Order);
         
-        modelBuilder.Entity<OrderEntity>()
-            .HasOne(o => o.PaymentMethod).WithMany()
-            .HasForeignKey(o => o.PaymentMethodId);
-        
         modelBuilder.Entity<CustomerEntity>().HasMany(c => c.Orders)
             .WithOne(o => o.Customer)
             .HasForeignKey(o => o.CustomerId);
@@ -36,13 +41,6 @@ public class WebShopDbContext(DbContextOptions<WebShopDbContext> options) : DbCo
         modelBuilder.Entity<OrderDetailEntity>()
             .HasKey(od => new { od.OrderId, od.ProductId });
         
-        modelBuilder.Entity<PaymentMethodEntity>()
-            .HasMany(pm => pm.Orders)
-            .WithOne(o => o.PaymentMethod);
-        
-        modelBuilder.Entity<PaymentMethodEntity>().Property(pm => pm.PaymentMethod)
-            .HasConversion(v => v.ToString(),
-                v => (PaymentMethod)Enum.Parse(typeof(PaymentMethod), v));
     }
     
 }

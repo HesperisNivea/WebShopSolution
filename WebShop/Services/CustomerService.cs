@@ -22,9 +22,9 @@ public class CustomerService(IUnitOfWork unitOfWork) : ICustomerService
     {
         using (unitOfWork)
         {
-            await unitOfWork.BeginTransactionAsync();
+           
             var customers = await unitOfWork.Customers.ListAllAsync();
-            await unitOfWork.CommitTransactionAsync();
+            await unitOfWork.CommitAsync();
             if (customers is not null)
             {
                 var result = customers.Select(c => new CustomerDto

@@ -13,12 +13,16 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<WebShopDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("WebShopDbContext")));
 
+builder.Services.AddScoped<IWebShopDbContext>(provider => provider.GetRequiredService<WebShopDbContext>());
+
 builder.Services.AddControllers();
 // Registrera Unit of Work i DI-container
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 builder.Services.AddScoped<ICustomerRepository<CustomerEntity>, CustomerRepository>();
 builder.Services.AddScoped<IProductRepository<ProductEntity>, ProductRepository>();
+builder.Services.AddScoped<IOrderDetailsRepository<OrderDetailEntity>, OrderDetailRepository>();
+builder.Services.AddScoped<IOrderRepository<OrderEntity>, OrderRepository>();
 
 builder.Services.AddTransient<INotificationObserver, EmailNotification>();
 builder.Services.AddTransient<INotificationObserver, SmsNotification>();
@@ -44,3 +48,7 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+
+{
+}
