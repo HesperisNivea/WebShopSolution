@@ -67,7 +67,6 @@ namespace WebShop.Tests
             A.CallTo(() => _mockContext.SaveChangesAsync(default)).MustHaveHappenedOnceExactly();
         }
         
-        
         [Fact]
         public void Dispose_CallsDbContextDispose()
         {
