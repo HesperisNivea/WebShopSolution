@@ -1,8 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using WebShop.Models;
 using WebShop.Services;
-using WebShop.UnitOfWork;
-using WebShopSolution.DataAccess.Entities;
 
 namespace WebShop.Controllers
 {
@@ -29,12 +27,23 @@ namespace WebShop.Controllers
             // Beh�ver anv�nda repository via Unit of Work f�r att h�mta produkter
             return Ok(products);
         }
+        
+        [HttpGet("{id}")]
+        public async Task<ActionResult<ProductDto>> GetProductById(int id)
+        {
+            var product = await _productService.GetById(id);
+            if (product is null)
+            {
+                return NotFound();
+            }
+            return Ok(product);
+        }
 
         // Endpoint f�r att l�gga till en ny produkt
         [HttpPost]
         public async Task<ActionResult> AddProduct([FromBody]ProductDto? product)
         {
-            if(product == null)
+            if(product is null)
             {
                 return BadRequest();
             }
@@ -46,8 +55,44 @@ namespace WebShop.Controllers
             // Sparar f�r�ndringar
 
             // Notifierar observat�rer om att en ny produkt har lagts till
-
             
         }
+
+        [HttpPut]
+        public async Task<ActionResult> UpdateProduct([FromBody] ProductDto? product)
+        {
+            if (product is null)
+            {
+                return BadRequest();
+            }
+
+            var result = await _productService.GetById(product.Id);
+
+            if (result is null)
+            {
+                return NotFound();
+            }
+
+            await _productService.Update(product);
+            return Ok();
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> Delete(int id)
+        {
+            var product = await _productService.GetById(id);
+
+            if (product is null)
+            {
+                return BadRequest();
+            }
+
+            await _productService.Delete(id);
+
+            return Ok(product);
+
+        }
+        
+        
     }
 }

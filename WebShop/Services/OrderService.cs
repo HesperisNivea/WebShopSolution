@@ -7,6 +7,7 @@ namespace WebShop.Services;
 
 interface IOrderService
 {
+    Task<IEnumerable<OrderDto>> GetAllOrdersAsync();
     Task<OrderDto?> GetOrderByIdAsync(int id);
     Task<OrderDto?> CreateOrderAsync(OrderDto order);
     Task<OrderDto?> UpdateOrderAsync(OrderDto order);
@@ -15,6 +16,11 @@ interface IOrderService
 
 public class OrderService(IUnitOfWork unitOfWork, IOrderRepository<OrderDto> orderRepository) : IOrderService
 {
+    public Task<IEnumerable<OrderDto>> GetAllOrdersAsync()
+    {
+        throw new NotImplementedException();
+    }
+
     public Task<OrderDto?> GetOrderByIdAsync(int id)
     {
         throw new NotImplementedException();

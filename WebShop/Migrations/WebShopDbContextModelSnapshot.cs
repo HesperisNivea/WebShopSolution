@@ -82,41 +82,11 @@ namespace WebShop.Migrations
                     b.Property<DateTime>("OrderDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("PaymentMethodId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.HasIndex("CustomerId");
 
-                    b.HasIndex("PaymentMethodId");
-
                     b.ToTable("Orders");
-                });
-
-            modelBuilder.Entity("WebShopSolution.DataAccess.Entities.PaymentMethodEntity", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PaymentMethod")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("PaymentMethods");
                 });
 
             modelBuilder.Entity("WebShopSolution.DataAccess.Entities.ProductEntity", b =>
@@ -170,15 +140,7 @@ namespace WebShop.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("WebShopSolution.DataAccess.Entities.PaymentMethodEntity", "PaymentMethod")
-                        .WithMany("Orders")
-                        .HasForeignKey("PaymentMethodId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Customer");
-
-                    b.Navigation("PaymentMethod");
                 });
 
             modelBuilder.Entity("WebShopSolution.DataAccess.Entities.CustomerEntity", b =>
@@ -189,11 +151,6 @@ namespace WebShop.Migrations
             modelBuilder.Entity("WebShopSolution.DataAccess.Entities.OrderEntity", b =>
                 {
                     b.Navigation("OrderDetails");
-                });
-
-            modelBuilder.Entity("WebShopSolution.DataAccess.Entities.PaymentMethodEntity", b =>
-                {
-                    b.Navigation("Orders");
                 });
 
             modelBuilder.Entity("WebShopSolution.DataAccess.Entities.ProductEntity", b =>
