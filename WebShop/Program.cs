@@ -11,7 +11,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddDbContext<WebShopDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("WebShopDbContext")));
+    options.UseSqlServer(Environment.GetEnvironmentVariable("ConnectionStrings__DefaultConnection")
+                         ?? builder.Configuration.GetConnectionString("WebShopDbContext")));
 
 builder.Services.AddScoped<IWebShopDbContext>(provider => provider.GetRequiredService<WebShopDbContext>());
 
@@ -34,11 +35,21 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
+// Apply migrations on startup
+using (var scope = app.Services.CreateScope())
+{
+    var dbContext = scope.ServiceProvider.GetRequiredService<WebShopDbContext>();
+    dbContext.Database.Migrate();
+}
 // Configure the HTTP request pipeline.
 //if (app.Environment.IsDevelopment())
 //{
 app.UseSwagger();
-app.UseSwaggerUI();
+app.UseSwaggerUI(c => 
+{
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "WebShop API V1");
+    c.RoutePrefix = string.Empty; // Set Swagger UI at the app's root
+});
 //}
 
 app.UseHttpsRedirection();

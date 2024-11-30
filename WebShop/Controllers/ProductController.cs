@@ -12,7 +12,7 @@ namespace WebShop.Controllers
         
         private readonly IProductService _productService;
 
-        // Constructor with UnitOfWork injected
+        // Constructor with IProductService injected
         public ProductController(IProductService productService)
         {
             _productService = productService;
@@ -23,9 +23,22 @@ namespace WebShop.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ProductDto>>> GetProducts()
         {
-            var products = await _productService.GetAll();
-            // Beh�ver anv�nda repository via Unit of Work f�r att h�mta produkter
-            return Ok(products);
+            try
+            {
+                var products = await _productService.GetAll();
+                if (products == null || !products.Any())
+                {
+                    return NotFound("No products found.");
+                }
+    
+                return Ok(products);
+            }
+            catch (Exception ex)    
+            {
+                // Log the exception 
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
+            }
+            
         }
         
         [HttpGet("{id}")]
@@ -43,6 +56,7 @@ namespace WebShop.Controllers
         [HttpPost]
         public async Task<ActionResult> AddProduct([FromBody]ProductDto? product)
         {
+            //model state
             if(product is null)
             {
                 return BadRequest();
@@ -50,11 +64,6 @@ namespace WebShop.Controllers
 
             await _productService.Create(product);
             return Ok();
-            // L�gger till produkten via repository
-           
-            // Sparar f�r�ndringar
-
-            // Notifierar observat�rer om att en ny produkt har lagts till
             
         }
 
@@ -80,16 +89,16 @@ namespace WebShop.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult> Delete(int id)
         {
-            var product = await _productService.GetById(id);
-
-            if (product is null)
+            try
             {
-                return BadRequest();
+                var product = _productService.Delete(id);
+                return Ok(product);
             }
-
-            await _productService.Delete(id);
-
-            return Ok(product);
+            catch (Exception ex)
+            {
+                // Log the exception
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
+            }
 
         }
         

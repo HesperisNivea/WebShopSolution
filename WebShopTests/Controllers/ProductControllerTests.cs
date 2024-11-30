@@ -132,7 +132,7 @@ public async Task GetProducts_ReturnsOkResult_WithAListOfProducts()
     public async Task Delete_ReturnsOkResult()
     {
         // Arrange
-        var product = new ProductDto { Id = 1, Name = "Test Product" };
+        var product = new ProductDto { Id = 1, Name = "Test Product"  };
         A.CallTo(() => _productService.GetById(1)).Returns(product);
 
         // Act

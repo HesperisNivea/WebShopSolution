@@ -9,7 +9,7 @@ namespace WebShop.Services;
 
 public interface IProductService
 {
-    Task<IEnumerable<ProductDto>> GetAll();
+    Task<IEnumerable<ProductDto>?> GetAll();
     Task<ProductDto?> GetById(int id);
     Task<ProductDto> Create(ProductDto product);
     Task Update(ProductDto customerDto);
@@ -17,7 +17,7 @@ public interface IProductService
 }
 public class ProductService(IUnitOfWork unitOfWork) : IProductService
 {
-    public async Task<IEnumerable<ProductDto>> GetAll()
+    public async Task<IEnumerable<ProductDto>?> GetAll()
     {
         
             var result = await unitOfWork.Products.ListAllAsync();
@@ -33,7 +33,7 @@ public class ProductService(IUnitOfWork unitOfWork) : IProductService
                 
             }
 
-        return Enumerable.Empty<ProductDto>();
+            return null;
     }
 
     public async Task<ProductDto?> GetById(int id)

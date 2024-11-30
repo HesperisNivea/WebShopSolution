@@ -12,7 +12,6 @@ namespace WebShop.UnitOfWork
 {
     public class UnitOfWork : IUnitOfWork
     {
-        // Hämta produkter från repository
         private readonly IWebShopDbContext _context;
         public IProductRepository<ProductEntity> Products { get; private set; }
         public IOrderDetailsRepository<OrderDetailEntity> OrderDetails { get; private set; }
@@ -21,6 +20,7 @@ namespace WebShop.UnitOfWork
 
         private readonly ProductSubject _productSubject;
         
+        // Constructor for UnitOfWork, injecting dependencies
         public UnitOfWork(IWebShopDbContext context,
         ICustomerRepository<CustomerEntity> customers,
         IProductRepository<ProductEntity> products,
