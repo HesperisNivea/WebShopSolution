@@ -1,35 +1,118 @@
 using Microsoft.AspNetCore.Mvc;
-using WebShop.UnitOfWork;
+using WebShop.Models;
+using WebShop.Services;
 
 namespace WebShop.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    
     public class ProductController : ControllerBase
     {
-        public ProductController()
+        
+        private readonly IProductService _productService;
+
+        // Constructor with IProductService injected
+        public ProductController(IProductService productService)
         {
+            _productService = productService;
         }
 
-        // Endpoint för att hämta alla produkter
+        
+        // Endpoint fï¿½r att hï¿½mta alla produkter
         [HttpGet]
-        public ActionResult<IEnumerable<Product>> GetProducts()
+        public async Task<ActionResult<IEnumerable<ProductDto>>> GetProducts()
         {
-            // Behöver använda repository via Unit of Work för att hämta produkter
-            return Ok();
+            try
+            {
+                var products = await _productService.GetAll();
+                if (products == null || !products.Any())
+                {
+                    return NotFound("No products found.");
+                }
+    
+                return Ok(products);
+            }
+            catch (Exception ex)    
+            {
+                // Log the exception 
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
+            }
+            
+        }
+        
+        [HttpGet("{id}")]
+        public async Task<ActionResult<ProductDto>> GetProductById(int id)
+        {
+            var product = await _productService.GetById(id);
+            if (product is null)
+            {
+                return NotFound();
+            }
+            return Ok(product);
         }
 
-        // Endpoint för att lägga till en ny produkt
+        // Endpoint fï¿½r att lï¿½gga till en ny produkt
         [HttpPost]
-        public ActionResult AddProduct(Product product)
+        public async Task<ActionResult> AddProduct([FromBody]ProductDto? product)
         {
-            // Lägger till produkten via repository
+            //model state
+            if(product is null)
+            {
+                return BadRequest();
+            }
 
-            // Sparar förändringar
-
-            // Notifierar observatörer om att en ny produkt har lagts till
-
+            await _productService.Create(product);
             return Ok();
+            
         }
+
+        [HttpPut]
+        public async Task<ActionResult> UpdateProduct([FromBody] ProductDto? product)
+        {
+            if (product is null)
+            {
+                return BadRequest();
+            }
+            try
+            {
+                var result = await _productService.GetById(product.Id);
+                if (result is null)
+                {
+                    return NotFound();
+                }
+                await _productService.Update(product);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
+            }
+            
+           
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> Delete(int id)
+        {
+            try
+            {
+                 var result = await _productService.GetById(id);
+                 if (result is null)
+                 {
+                     return NotFound();
+                 }
+                 await _productService.Delete(id);
+                 return Ok(true);
+            }
+            catch (Exception ex)
+            {
+                // Log the exception
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
+            }
+            
+        }
+        
+        
     }
 }
