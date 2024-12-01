@@ -1,0 +1,22 @@
+# This is a generated file. Not intended for manual editing.
+version: "3.8"
+services:
+  webshop:
+    build:
+      context: "C:\\Users\\radom\\OneDrive\\Dokumenty\\GitHub\\CleanCodeLabb\\WebShopSolution"
+      dockerfile: "WebShop/Dockerfile"
+      target: "build"
+    command: []
+    entrypoint:
+    - "dotnet"
+    - "/app/bin/Debug/net8.0/WebShop.dll"
+    environment:
+      ASPNETCORE_ENVIRONMENT: "Development"
+    image: "webshop:dev"
+    ports: []
+    volumes:
+    - "C:\\Users\\radom\\OneDrive\\Dokumenty\\GitHub\\CleanCodeLabb\\WebShopSolution\\\
+      WebShop:/app:rw"
+    - "C:\\Users\\radom\\OneDrive\\Dokumenty\\GitHub\\CleanCodeLabb\\WebShopSolution:/src:rw"
+    - "C:\\Users\\radom\\.nuget\\packages:/root/.nuget/packages"
+    working_dir: "/app"
