@@ -1,4 +1,7 @@
-﻿namespace WebShop.Notifications
+﻿using WebShop.Models;
+using WebShopSolution.DataAccess.Entities;
+
+namespace WebShop.Notifications
 {
     // Subject som håller reda på observatörer och notifierar dem
     public class ProductSubject
@@ -18,7 +21,7 @@
             _observers.Remove(observer);
         }
 
-        public void Notify(Product product)
+        public void Notify(ProductEntity product)
         {
             // Notifiera alla observatörer om en ny produkt
             foreach (var observer in _observers)
