@@ -74,16 +74,22 @@ namespace WebShop.Controllers
             {
                 return BadRequest();
             }
-
-            var result = await _productService.GetById(product.Id);
-
-            if (result is null)
+            try
             {
-                return NotFound();
+                var result = await _productService.GetById(product.Id);
+                if (result is null)
+                {
+                    return NotFound();
+                }
+                await _productService.Update(product);
+                return Ok();
             }
-
-            await _productService.Update(product);
-            return Ok();
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
+            }
+            
+           
         }
 
         [HttpDelete("{id}")]
@@ -91,15 +97,20 @@ namespace WebShop.Controllers
         {
             try
             {
-                var product = _productService.Delete(id);
-                return Ok(product);
+                 var result = await _productService.GetById(id);
+                 if (result is null)
+                 {
+                     return NotFound();
+                 }
+                 await _productService.Delete(id);
+                 return Ok(true);
             }
             catch (Exception ex)
             {
                 // Log the exception
                 return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
             }
-
+            
         }
         
         

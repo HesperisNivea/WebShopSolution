@@ -29,6 +29,7 @@ builder.Services.AddTransient<INotificationObserver, EmailNotification>();
 builder.Services.AddTransient<INotificationObserver, SmsNotification>();
 
 builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<ICustomerService, CustomerService>();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

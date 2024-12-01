@@ -1,4 +1,5 @@
 using FakeItEasy;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using WebShop;
@@ -127,12 +128,13 @@ public async Task GetProducts_ReturnsOkResult_WithAListOfProducts()
         // Assert
         Assert.IsType<BadRequestResult>(result);
     }
-    
+
     [Fact]
     public async Task Delete_ReturnsOkResult()
     {
+
         // Arrange
-        var product = new ProductDto { Id = 1, Name = "Test Product"  };
+        var product = new ProductDto { Id = 1, Name = "Test Product" };
         A.CallTo(() => _productService.GetById(1)).Returns(product);
 
         // Act
@@ -140,20 +142,19 @@ public async Task GetProducts_ReturnsOkResult_WithAListOfProducts()
 
         // Assert
         var okResult = Assert.IsType<OkObjectResult>(result);
-        var returnProduct = Assert.IsType<ProductDto>(okResult.Value);
-        Assert.Equal(1, returnProduct.Id);
+        Assert.IsType<bool>(okResult.Value);
     }
 
     [Fact]
     public async Task Delete_ReturnsBadRequest_WhenProductIsNull()
     {
         // Arrange
-        A.CallTo(() => _productService.GetById(A<int>.Ignored)).Returns((ProductDto)null);
+        A.CallTo(() => _productService.GetById(A<int>._)).Returns((ProductDto)null);
 
         // Act
         var result = await _controller.Delete(1);
 
         // Assert
-        Assert.IsType<BadRequestResult>(result);
+        Assert.IsType<NotFoundResult>(result);
     }
 }

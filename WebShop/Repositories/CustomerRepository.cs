@@ -1,15 +1,25 @@
-﻿using WebShopSolution.DataAccess.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using WebShopSolution.DataAccess.Entities;
 
 namespace WebShop.Repositories;
 
 public interface ICustomerRepository<T> : IRepository<T> where T : class
 {
-    Task<CustomerEntity> GetByEmail(string email);
+    Task<CustomerEntity?> GetByEmail(string email);
+    
+    Task<CustomerEntity?> GetById(int id);
 }
 public class CustomerRepository(WebShopDbContext context) :  Repository<CustomerEntity>(context), ICustomerRepository<CustomerEntity>
 {
-    public Task<CustomerEntity> GetByEmail(string email)
+    public async Task<CustomerEntity?> GetByEmail(string email)
     {
-        throw new NotImplementedException();
+        return await context.Customers.FirstOrDefaultAsync(c => c.CustomerEmail == email);
+        
+    }
+
+    public async Task<CustomerEntity?> GetById(int id)
+    {
+        return await context.Customers.FirstOrDefaultAsync(c => c.Id == id);
+        
     }
 }

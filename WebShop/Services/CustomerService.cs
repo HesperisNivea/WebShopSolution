@@ -50,28 +50,74 @@ public class CustomerService(IUnitOfWork unitOfWork) : ICustomerService
         
     }
 
-    public Task<CustomerDto> GetById(int id)
+    public async Task<CustomerDto?> GetById(int id)
     {
-        throw new NotImplementedException();
+       var customer = await unitOfWork.Customers.GetById(id);
+         if (customer is not null)
+         {
+              return new CustomerDto
+              {
+                Id = customer.Id,
+                Name = customer.Name,
+                CustomerEmail = customer.CustomerEmail,
+                CustomerPhone = customer.CustomerPhone,
+              };
+         }
+         
+         return null;
     }
 
-    public Task<CustomerDto> GetByEmail(string email)
+    public async Task<CustomerDto> GetByEmail(string email)
     {
-        throw new NotImplementedException();
+        var customer = await unitOfWork.Customers.GetByEmail(email);
+        if (customer is not null)
+        {
+            return new CustomerDto
+            {
+                Id = customer.Id,
+                Name = customer.Name,
+                CustomerEmail = customer.CustomerEmail,
+                CustomerPhone = customer.CustomerPhone,
+            };
+        }
+
+        return null;
     }
 
-    public Task<CustomerDto> Create(CustomerDto customerDto)
+    public async Task<CustomerDto> Create(CustomerDto customerDto)
     {
-        throw new NotImplementedException();
+        await unitOfWork.Customers.AddAsync(new CustomerEntity
+        {
+            Name = customerDto.Name,
+            CustomerEmail = customerDto.CustomerEmail,
+            CustomerPhone = customerDto.CustomerPhone,
+        });
+        await unitOfWork.CommitAsync();
+        return customerDto;
+    }
+            
+    public async Task Update(CustomerDto customerDto)
+    {
+        var customer = new CustomerEntity
+        {
+            Id = customerDto.Id,
+            Name = customerDto.Name,
+            CustomerEmail = customerDto.CustomerEmail,
+            CustomerPhone = customerDto.CustomerPhone,
+        };
+        await unitOfWork.Customers.UpdateAsync(customer);
+        await unitOfWork.CommitAsync();
     }
 
-    public Task Update(CustomerDto customerDto)
+    public async Task Delete(int id)
     {
-        throw new NotImplementedException();
+        var customer = await unitOfWork.Customers.GetById(id);
+        if (customer is not null)
+        {
+            await unitOfWork.Customers.DeleteAsync(id);
+            await unitOfWork.CommitAsync();
+        }
+        
     }
-
-    public Task Delete(int id)
-    {
-        throw new NotImplementedException();
-    }
+        
 }
