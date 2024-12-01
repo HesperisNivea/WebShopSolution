@@ -10,7 +10,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="64918bfb-3082-42ef-82bf-b16982f35084" name="Changes" comment="default app settings" />
+    <list default="true" id="64918bfb-3082-42ef-82bf-b16982f35084" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.WebShopSolution/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.WebShopSolution/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.txt" beforeDir="false" afterPath="$PROJECT_DIR$/README.txt" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -22,7 +25,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="master" />
+        <entry key="$PROJECT_DIR$" value="new-repository-setup" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -47,10 +50,8 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/0b7856b364e04283a10bb924825b197f28f228/1e/3be683c0/IDbContextDependencies.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/a0b45f29f34f594814a7b1fbc25fe5ef3c18257956ed4f4fbfa68717db58/DbContext.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/ce37be1a06b16c6faa02038d2cc477dd3bca5b217ceeb41c5f2ad45c1bf9/ServiceProvider.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/WebShop/Entities/ProductEntity.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="mock://C:/Users/radom/OneDrive/Dokumenty/GitHub/CleanCodeLabb/WebShopSolution/WebShop/Program.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://C:/Users/radom/OneDrive/Dokumenty/GitHub/CleanCodeLabb/WebShopSolution/WebShop/Repositories/CustomerRepository.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/WebShop/Repositories/Repository.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="mock://C:/Users/radom/OneDrive/Dokumenty/GitHub/CleanCodeLabb/WebShopSolution/WebShop/Services/CustomerService.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://C:/Users/radom/OneDrive/Dokumenty/GitHub/CleanCodeLabb/WebShopSolution/WebShop/appsettings.Development.json" root0="FORCE_HIGHLIGHTING" />
     <setting file="mock://C:/Users/radom/OneDrive/Dokumenty/GitHub/CleanCodeLabb/WebShopSolution/WebShop/appsettings.Development.json" root0="FORCE_HIGHLIGHTING" />
@@ -74,27 +75,27 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    ".NET Launch Settings Profile.WebShop: IIS Express.executor": "Run",
-    "Docker.WebShop/Dockerfile.executor": "Run",
-    "Docker.docker-compose.yml.sqlserver: Compose Deployment.executor": "Run",
-    "Docker.docker-compose.yml.webshop: Compose Deployment.executor": "Run",
-    "Docker.docker-compose.yml: Compose Deployment.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "XThreadsFramesViewSplitterKey": "0.24618992",
-    "d0b4c8a4-1e8b-4bf1-878b-736c24450e81.executor": "Debug",
-    "git-widget-placeholder": "new-repository-setup",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "preferences.lookFeel",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;.NET Launch Settings Profile.WebShop: IIS Express.executor&quot;: &quot;Run&quot;,
+    &quot;Docker.WebShop/Dockerfile.executor&quot;: &quot;Run&quot;,
+    &quot;Docker.docker-compose.yml.sqlserver: Compose Deployment.executor&quot;: &quot;Run&quot;,
+    &quot;Docker.docker-compose.yml.webshop: Compose Deployment.executor&quot;: &quot;Run&quot;,
+    &quot;Docker.docker-compose.yml: Compose Deployment.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;XThreadsFramesViewSplitterKey&quot;: &quot;0.24618992&quot;,
+    &quot;d0b4c8a4-1e8b-4bf1-878b-736c24450e81.executor&quot;: &quot;Debug&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected="Docker.docker-compose.yml: Compose Deployment">
     <configuration name="WebShop: IIS Express" type="LaunchSettings" factoryName=".NET Launch Settings Profile">
       <option name="LAUNCH_PROFILE_PROJECT_FILE_PATH" value="$PROJECT_DIR$/WebShop/WebShop.csproj" />
@@ -235,7 +236,8 @@
       <workItem from="1732823115033" duration="6395000" />
       <workItem from="1732868061983" duration="5677000" />
       <workItem from="1733000925201" duration="5424000" />
-      <workItem from="1733059027882" duration="5287000" />
+      <workItem from="1733059027882" duration="6260000" />
+      <workItem from="1733066737302" duration="38000" />
     </task>
     <task id="LOCAL−00001" summary="new repos, entities and controllers">
       <option name="closed" value="true" />
@@ -314,7 +316,14 @@
       <option name="presentableId" value="LOCAL−00011" />
       <updated>1733064063103</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL−00012" summary=" things">
+      <option name="closed" value="true" />
+      <created>1733064549636</created>
+      <option name="number" value="LOCAL−00012" />
+      <option name="presentableId" value="LOCAL−00012" />
+      <updated>1733064549636</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -346,7 +355,8 @@
     <MESSAGE value="try catch for controllers, failed tests" />
     <MESSAGE value="&#10;customer changes" />
     <MESSAGE value="default app settings" />
-    <option name="LAST_COMMIT_MESSAGE" value="default app settings" />
+    <MESSAGE value=" things" />
+    <option name="LAST_COMMIT_MESSAGE" value=" things" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
